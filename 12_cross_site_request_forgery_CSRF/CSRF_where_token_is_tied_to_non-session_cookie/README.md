@@ -95,6 +95,9 @@ This is a bit of a race condition, as it relies on the fact that the image reque
 So a better way would be to use the `onError` event to submit the form as it enforces the order of first request the picture and process the response and only submit the form once it fails to result in an image. 
 
 For this, the full script part in the image above needs to be removed and `onerror="document.forms[0].submit()"` is added to the img-tag.
+This also won't work with the modern web browser, so we need to add "SameSite=None" because the exploit server is a separate domain, you need to explicitly set "SameSite=None".
+It will looks like:
+<img src="https://LAB-ID.web-security-academy.net/?search=hi%0d%0aSet-Cookie:+csrfKey=<csrf token>;%20SameSite=None" onerror="document.forms[0].submit()"> 
 
 After delivering the form to the victim, the lab updates to
 
